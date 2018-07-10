@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.easy.mapper.Carmapper">
+	
+	
+		<select id="select" resultType="caruser">
+			
+			select username,password
+			from Caruser
+			<where>
+				<if test="username != null and username != ''">
+					
+					username = #{username}
+				
+				</if>
+				<if test="password != null and password != ''">
+					
+					password = #{password}
+					
+				</if>
+				
+			</where>
+			
+		</select>
+		
+		<select id="selectIdByName" resultType="Integer">
+		
+			select id from caruser
+			<where>
+			
+				username = #{username}
+				
+			</where>
+			
+		</select>
+		
+		<select id="selectCar" resultType="Car">
+		
+			select idCar,B_id, Bname, L_id,type,structure,output,gearbox,seat,original,discount,image
+				from Car, Brand
+				<where>
+					Car.B_id = Brand.idBrand
+					and 
+					B_id = #{id}
+					
+				</where>
+			
+		</select> 
+		
+		<select id="selectBypage" resultType="Car">
+		
+			select idCar,B_id, L_id,type,structure,output,gearbox,seat,original,discount,image
+				from Car
+				limit #{first},#{last}
+		
+		</select>
+		
+		
+		
+		
+		
+		<insert id="insertCar" >
+			
+			insert into Car(
+					B_id,L_id,type,structure,output,gearbox,seat,original,discount,image
+					)
+				value(
+					#{B_id},
+					#{L_id},
+					#{type},
+					#{structure},
+					#{output},
+					#{gearbox},
+					#{seat},
+					#{original},
+					#{discount},
+					#{image}
+				
+				)
+		
+		</insert>
+		
+		<select id="selectbrand" resultType="com.easy.entity.brand">
+		
+			select idBrand,Bname
+			from brand
+		
+		</select>
+		
+		<select id="selectlevel" resultType="com.easy.entity.Level">
+		
+				select idlevel,lname
+				from level
+				
+		</select>
+		<delete id="deleteCar">
+		
+			delete from Car
+			<where>
+					idCar = #{idCar}
+			
+			</where>
+		
+		
+		</delete>
+	
+		<update id="updateCar">
+				update Car 
+				set 
+					B_id = #{B_id},
+					L_id = #{L_id},
+					type = #{type},
+					structure = #{structure},
+					output = #{output},
+					gearbox = #{gearbox},
+					seat = #{seat},
+					original = #{original},
+					discount = #{discount},
+					image = #{image}
+				<where>
+				
+					idCar = #{idCar}
+				
+				</where>
+		</update>
+		<select id="selectID" resultType="Car">
+		
+			select idCar,B_id, L_id,type,structure,output,gearbox,seat,original,discount,image
+				from Car
+				<where>
+					idCar=#{idCar}
+				</where>
+			
+		</select>
+		
+	</mapper>
